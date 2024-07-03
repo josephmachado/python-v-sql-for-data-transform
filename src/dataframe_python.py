@@ -1,10 +1,3 @@
-# polars script to
-# load data from exchange API
-# remove rows with None volumeUsd
-# Convert percentTotalVolume, volumeUSD to Decimal
-# Convert updated to timestamp with the get_utc_from_unit_time function
-# bucket tradingPairs into 0-100, 100-500, 500+ range
-# group by bucket and create count -> output
 from decimal import Decimal
 
 import pandas as pd
