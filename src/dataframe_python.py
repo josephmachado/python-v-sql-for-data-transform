@@ -2,8 +2,12 @@ from decimal import Decimal
 
 import pandas as pd
 
-from native_python import (determine_bucket, extract_coincap_api,
-                           flatten_exchange_data, get_utc_from_unix_time)
+from native_python import (
+    determine_bucket,
+    extract_coincap_api,
+    flatten_exchange_data,
+    get_utc_from_unix_time,
+)
 
 
 def clean_exchange_data(df):
@@ -15,6 +19,7 @@ def clean_exchange_data(df):
     df.loc[:, "tradingPairs"] = df["tradingPairs"].apply(int)
     df.loc[:, "updated"] = df["updated"].apply(get_utc_from_unix_time)
     return df
+
 
 def bucket_exchange_data(df, column_name, bucket_ranges):
     df["bucket"] = df[column_name].apply(

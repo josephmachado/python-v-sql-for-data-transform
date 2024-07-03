@@ -5,7 +5,6 @@ from operator import itemgetter
 from pprint import pprint
 from typing import Any, Dict, List, Optional
 
-import pytz
 import requests
 
 
@@ -16,7 +15,7 @@ def extract_coincap_api(url):
     """
     try:
         response = requests.get(url)
-        response.raise_for_status()  # Raise HTTPError for bad responses (4xx and 5xx)
+        response.raise_for_status()
         data = response.json()
         return data
     except requests.exceptions.HTTPError as http_err:
@@ -67,7 +66,9 @@ def bucket_data(data, column_to_bucket_by, bucket_ranges):
     processed_data = []
     for entry in data:
         if entry[column_to_bucket_by] is not None:
-            bucket = determine_bucket(entry[column_to_bucket_by], bucket_ranges)
+            bucket = determine_bucket(
+                entry[column_to_bucket_by], bucket_ranges
+            )
             entry[f"{column_to_bucket_by}_bucket"] = bucket
             processed_data.append(entry)
     return processed_data
@@ -90,7 +91,9 @@ def aggregate_exchange_data(data, agg_col):
 def transform_exchange_data(data):
     transformed_data = aggregate_exchange_data(
         bucket_data(
-            clean_exchange_data(flatten_exchange_data(data)), "tradingPairs", [100, 500]
+            clean_exchange_data(flatten_exchange_data(data)),
+            "tradingPairs",
+            [100, 500],
         ),
         "tradingPairs_bucket",
     )

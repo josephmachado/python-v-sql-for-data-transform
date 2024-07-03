@@ -1,9 +1,7 @@
-from datetime import datetime
 from decimal import Decimal
 
 import pandas as pd
 import pytest
-import pytz
 
 # Import the function and any necessary utilities from the module where they are defined
 from src.dataframe_python import clean_exchange_data, get_utc_from_unix_time

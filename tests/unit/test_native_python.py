@@ -1,8 +1,6 @@
-from datetime import datetime
 from decimal import Decimal
 
 import pytest
-import pytz
 
 # Assume these functions are defined in the module where clean_exchange_data is located
 from src.native_python import clean_exchange_data, get_utc_from_unix_time
@@ -52,7 +50,9 @@ def test_clean_exchange_data(sample_data):
 
     assert len(result) == len(expected_data)
     for entry, expected_entry in zip(result, expected_data):
-        assert entry["percentTotalVolume"] == expected_entry["percentTotalVolume"]
+        assert (
+            entry["percentTotalVolume"] == expected_entry["percentTotalVolume"]
+        )
         assert entry["updated"] == expected_entry["updated"]
         assert entry["volumeUsd"] == expected_entry["volumeUsd"]
         assert entry["tradingPairs"] == expected_entry["tradingPairs"]
