@@ -7,15 +7,14 @@ from native_python import (determine_bucket, extract_coincap_api,
 
 
 def clean_exchange_data(df):
-    # Remove rows with None volumeUSD
-    df = df[df["volumeUsd"].notna()]
-    # Convert percentTotalVolume, volumeUSD to Decimal
-    df["percentTotalVolume"] = df["percentTotalVolume"].apply(Decimal)
-    df["volumeUSD"] = df["volumeUsd"].apply(Decimal)
-    df["tradingPairs"] = df["tradingPairs"].apply(int)
-    df["updated"] = df["updated"].apply(get_utc_from_unix_time)
+    # Remove rows with None volumeUsd
+    df = df[df["volumeUsd"].notna()].copy()
+    # Convert percentTotalVolume, volumeUsd to Decimal
+    df.loc[:, "percentTotalVolume"] = df["percentTotalVolume"].apply(Decimal)
+    df.loc[:, "volumeUsd"] = df["volumeUsd"].apply(Decimal)
+    df.loc[:, "tradingPairs"] = df["tradingPairs"].apply(int)
+    df.loc[:, "updated"] = df["updated"].apply(get_utc_from_unix_time)
     return df
-
 
 def bucket_exchange_data(df, column_name, bucket_ranges):
     df["bucket"] = df[column_name].apply(
