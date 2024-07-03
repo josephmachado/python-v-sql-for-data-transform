@@ -57,7 +57,6 @@ def clean_exchange_data(data):
 
 def determine_bucket(value, ranges):
     for i, upper_limit in enumerate(ranges):
-        print(type(value), type(upper_limit))
         if value < upper_limit:
             return f"{ranges[i-1] if i > 0 else 0}-{upper_limit}"
     return f"{ranges[-1]}+"
