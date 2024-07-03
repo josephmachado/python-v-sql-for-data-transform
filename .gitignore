@@ -1,2 +1,7 @@
-env/
+# Ignore the Python virtual environment directory
+venv/
+.env/
+
+# Ignore __pycache__ directories
+__pycache__/
 
