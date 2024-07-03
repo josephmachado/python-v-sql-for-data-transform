@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Optional
 import requests
 
 
-def extract_coincap_api(url):
+def extract_coincap_api(url: str) -> Dict[str, List[Dict[str, str]]] | None:
     """
     Function to pull data from url
     and return the data
@@ -26,6 +26,8 @@ def extract_coincap_api(url):
         print(f"Timeout error occurred: {timeout_err}")
     except requests.exceptions.RequestException as req_err:
         print(f"An error occurred: {req_err}")
+    finally:
+        return None
 
 
 def flatten_exchange_data(
@@ -40,7 +42,7 @@ def get_utc_from_unix_time(
     return datetime.fromtimestamp(int(unix_ts) / second) if unix_ts else None
 
 
-def clean_exchange_data(data):
+def clean_exchange_data(data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     # use Decimal for percentTotalVolume, volumeUsd
     # convert updated to datetime
     # if null volumeUsd drop rows
@@ -55,14 +57,18 @@ def clean_exchange_data(data):
     return processed_data
 
 
-def determine_bucket(value, ranges):
+def determine_bucket(value: int, ranges: List[int]) -> str:
     for i, upper_limit in enumerate(ranges):
         if value < upper_limit:
             return f"{ranges[i-1] if i > 0 else 0}-{upper_limit}"
     return f"{ranges[-1]}+"
 
 
-def bucket_data(data, column_to_bucket_by, bucket_ranges):
+def bucket_data(
+    data: List[Dict[str, Any]],
+    column_to_bucket_by: str,
+    bucket_ranges: List[int],
+):
     processed_data = []
     for entry in data:
         if entry[column_to_bucket_by] is not None:
