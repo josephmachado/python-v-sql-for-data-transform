@@ -1,5 +1,11 @@
 Code for blog at https://www.startdataengineering.com/post/sql-v-python/.
 
+* [SQL v Python for Data Transformation](#sql-v-python-for-data-transformation)
+    * [Setup](#setup)
+        * [Run on codespaces](#run-on-codespaces)
+        * [Running locally](#running-locally)
+    * [Code Comparison](#code-comparison)
+
 # SQL v Python for Data Transformation
 
 ## Setup
