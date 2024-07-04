@@ -13,11 +13,11 @@ def extract_coincap_api(url: str) -> Dict[str, List[Dict[str, str]]] | None:
     Function to pull data from url
     and return the data
     """
+    data = None
     try:
         response = requests.get(url)
         response.raise_for_status()
         data = response.json()
-        return data
     except requests.exceptions.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
     except requests.exceptions.ConnectionError as conn_err:
@@ -27,7 +27,7 @@ def extract_coincap_api(url: str) -> Dict[str, List[Dict[str, str]]] | None:
     except requests.exceptions.RequestException as req_err:
         print(f"An error occurred: {req_err}")
     finally:
-        return None
+        return data
 
 
 def flatten_exchange_data(
@@ -72,9 +72,7 @@ def bucket_data(
     processed_data = []
     for entry in data:
         if entry[column_to_bucket_by] is not None:
-            bucket = determine_bucket(
-                entry[column_to_bucket_by], bucket_ranges
-            )
+            bucket = determine_bucket(entry[column_to_bucket_by], bucket_ranges)
             entry[f"{column_to_bucket_by}_bucket"] = bucket
             processed_data.append(entry)
     return processed_data
@@ -108,7 +106,8 @@ def transform_exchange_data(data):
 
 def run_exchange_data_pipeline():
     url = "https://api.coincap.io/v2/exchanges"
-    pprint(transform_exchange_data(extract_coincap_api(url)))
+    data = extract_coincap_api(url)
+    pprint(transform_exchange_data(data))
 
 
 if __name__ == "__main__":
