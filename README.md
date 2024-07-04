@@ -20,7 +20,7 @@ Wait for codespaces to setup environment with the [requirements.txt](./requireme
 # run data transformations with 
 python src/native_python.py
 python src/dataframe_python.py
-duckdb :memory: < ./src/query.sql
+python src/query.py
 ```
 
 Your output will be the same. Run linting, tests as:
@@ -48,7 +48,7 @@ pip install -r requirements.txt
 # run data transformations with 
 python src/native_python.py
 python src/dataframe_python.py
-duckdb :memory: < ./src/query.sql
+python src/query.py
 ```
 
 Your output will be the same. Run linting, tests as:

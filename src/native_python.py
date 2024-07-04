@@ -72,7 +72,9 @@ def bucket_data(
     processed_data = []
     for entry in data:
         if entry[column_to_bucket_by] is not None:
-            bucket = determine_bucket(entry[column_to_bucket_by], bucket_ranges)
+            bucket = determine_bucket(
+                entry[column_to_bucket_by], bucket_ranges
+            )
             entry[f"{column_to_bucket_by}_bucket"] = bucket
             processed_data.append(entry)
     return processed_data
